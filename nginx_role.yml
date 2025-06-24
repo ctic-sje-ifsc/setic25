@@ -6,3 +6,14 @@
       vars:
         server_name: "meusite.com"
         document_root: "/var/www/meusite"
+
+  tasks:
+    - name: Define arquivo index.html
+      ansible.builtin.copy:
+        dest: ¨{{ document_root }}¨/index.html
+        content: |
+          <H1> Meu Site! </H1>
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify: Reiniciar nginx
