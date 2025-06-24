@@ -10,7 +10,7 @@
   tasks:
     - name: Define arquivo index.html
       ansible.builtin.copy:
-        dest: ¨{{ document_root }}¨/index.html
+        dest: /var/www/meusite/index.html
         content: |
           <H1> Meu Site! </H1>
         owner: www-data
