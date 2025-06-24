@@ -1,0 +1,8 @@
+- name: Configurações Debian12 servidor web
+  hosts: debian12
+
+  roles:
+    - role: nginx
+      vars:
+        server_name: "meusite.com"
+        document_root: "/var/www/meusite"
