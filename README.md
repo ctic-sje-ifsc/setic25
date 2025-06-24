@@ -23,7 +23,7 @@ Managed node Windows 11     10.10.10.11/24
 [Building Ansible inventories](https://docs.ansible.com/ansible/latest/inventory_guide/index.html)
 
 
-### Criar arquivo hosts.ini como inventário:
+Criar arquivo hosts.ini como inventário:
 ``` ini
 [Linux]  
 debian12 ansible_host=10.10.10.10
@@ -57,7 +57,7 @@ Teste de conexão:
 
 `ansible -i setic25/hosts.ini -e ansible_winrm_server_cert_validation=ignore -c winrm -u setic25 -k -m win_ping win11`
 
-### Definir variáveis no inventário
+## Definir variáveis no inventário
 
 ### Alterar arquivo hosts.ini como inventário:
 ``` ini
@@ -79,22 +79,20 @@ ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore  
 ```
 
-### Linux - Teste com módulo ping
+Linux - Teste com módulo ping
 `ansible -i setic25/hosts.ini -m ping debian12`
 
-### Windows - Teste com módulo win_ping
+Windows - Teste com módulo win_ping
 `ansible -i setic25/hosts.ini -m win_ping win11`
 
 
-## Módulos do ansible
+## Módulos
 
 [Index of all Modules](https://docs.ansible.com/ansible/latest/collections/index_module.html)
 
 ### Linux
 
-[Comandos ad hoc](https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html)
-
-#### Comandos ad hoc para tarefas não repetitivas:
+Comandos ad hoc para tarefas não repetitivas:
 
 `ansible -i setic25/hosts.ini -m setup debian12`
 
@@ -102,25 +100,41 @@ ansible_winrm_server_cert_validation=ignore
 
 `ansible -i setic25/hosts.ini -m apt -a 'pkg=nginx' debian12`
 
-#### Playbook
+## Playbook
 
 [ansible.builtin.apt module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html#ansible-collections-ansible-builtin-apt-module)
 
 Usar o playbook nginx.yml. Testar o notify.
 
-## Roles
+### Roles
 
 [Documentação](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#roles)
 
-Transformar playbook nginx numa role
+Verificar as diferenças do playbook nginx e da role nginx
+
+### Windows
+
+[win chocolatey](https://docs.ansible.com/ansible/latest/collections/chocolatey/chocolatey/win_chocolatey_module.html#chocolatey-chocolatey-win-chocolatey-module-manage-packages-using-chocolatey)
+
+[win package](https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_package_module.html#ansible-windows-win-package-module-installs-uninstalls-an-installable-package)
+
+`ansible -i setic25/hosts.ini -m win_chocolatey -a 'name=notepadplusplus' win11`
 
 
+Playbook Windows
+
+Ingressa domínio
+
+
+
+[ansible-vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html#protecting-sensitive-data-with-ansible-vault)
+
+ansible-vault
 ansible-lint
 extensões para vscode
-
-estrutura do role - transformar o módulo numa role.
 
 
 Links sugeridos:
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#desired-state-and-idempotency
+https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html
