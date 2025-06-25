@@ -85,7 +85,6 @@ Linux - Teste com módulo ping
 Windows - Teste com módulo win_ping
 `ansible -i setic25/hosts.ini -m win_ping win11`
 
-
 ## Módulos
 
 [Index of all Modules](https://docs.ansible.com/ansible/latest/collections/index_module.html)
@@ -106,7 +105,7 @@ Comandos ad hoc para tarefas não repetitivas:
 
 Usar o playbook nginx.yml. Testar o notify.
 
-### Roles
+## Roles
 
 [Documentação](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#roles)
 
@@ -114,27 +113,45 @@ Verificar as diferenças do playbook nginx e da role nginx
 
 ### Windows
 
-[win chocolatey](https://docs.ansible.com/ansible/latest/collections/chocolatey/chocolatey/win_chocolatey_module.html#chocolatey-chocolatey-win-chocolatey-module-manage-packages-using-chocolatey)
+[win_chocolatey](https://docs.ansible.com/ansible/latest/collections/chocolatey/chocolatey/win_chocolatey_module.html#chocolatey-chocolatey-win-chocolatey-module-manage-packages-using-chocolatey)
 
-[win package](https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_package_module.html#ansible-windows-win-package-module-installs-uninstalls-an-installable-package)
+[Lista de pacotes do chocolatey](https://community.chocolatey.org/packages)
+
+[win_package](https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_package_module.html#ansible-windows-win-package-module-installs-uninstalls-an-installable-package)
 
 `ansible -i setic25/hosts.ini -m win_chocolatey -a 'name=notepadplusplus' win11`
 
-
-Playbook Windows
-
-Ingressa domínio
-
-
+## Segurança de conteúdo sensível
 
 [ansible-vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html#protecting-sensitive-data-with-ansible-vault)
 
-ansible-vault
-ansible-lint
-extensões para vscode
+Encripitar todo o arquivo hosts:  
+`ansible-vault encrypt setic25/hosts-com-vault.ini`
 
+`ansible -i setic25/hosts-com-vault.ini -m win_ping win11 --ask-vault-pass`
+
+Usar arquivo com variáveis encripitadas:  
+`ansible -i setic25/hosts.ini -e "@setic25/vault.yml"  -m win_ping win11 --ask-vault-pass`
+
+Usar variáveis de ambiente:
+`ansible_password="{{ lookup('env', 'ANSIBLE_PASSWORD') }}"`
+`export ANSIBLE_PASSWORD=setic25`
+
+Role ingressa_dominio  
+
+Encripitar a senha e adicionar na variável domain_admin_password:  
+`ansible-vault encrypt_string -p`
+
+Verificar se a senha ficou correta:  
+`ansible localhost -m ansible.builtin.debug -a var="domain_admin_password" -e "@setic25/roles/ingressa_dominio/vars/main.yml" --ask-vault-pass`
+
+
+Falar como usamos: nossos computadores como Control node, repositórios abertos e fechados.
+
+Falar de IaC
 
 Links sugeridos:
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#desired-state-and-idempotency
 https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html
+https://ansible.readthedocs.io/projects/lint/
