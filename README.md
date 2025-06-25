@@ -79,10 +79,10 @@ ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore  
 ```
 
-Linux - Teste com módulo ping
+Linux - Teste com módulo ping  
 `ansible -i setic25/hosts.ini -m ping debian12`
 
-Windows - Teste com módulo win_ping
+Windows - Teste com módulo win_ping  
 `ansible -i setic25/hosts.ini -m win_ping win11`
 
 ## Módulos
@@ -126,14 +126,14 @@ Verificar as diferenças do playbook nginx e da role nginx
 [ansible-vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html#protecting-sensitive-data-with-ansible-vault)
 
 Encripitar todo o arquivo hosts:  
-`ansible-vault encrypt setic25/hosts-com-vault.ini`
+`ansible-vault encrypt setic25/hosts-encripitado.ini`
 
 `ansible -i setic25/hosts-com-vault.ini -m win_ping win11 --ask-vault-pass`
 
 Usar arquivo com variáveis encripitadas:  
 `ansible -i setic25/hosts.ini -e "@setic25/vault.yml"  -m win_ping win11 --ask-vault-pass`
 
-Usar variáveis de ambiente:
+Usar variáveis de ambiente:  
 `ansible_password="{{ lookup('env', 'ANSIBLE_PASSWORD') }}"`
 `export ANSIBLE_PASSWORD=setic25`
 
@@ -144,7 +144,6 @@ Encripitar a senha e adicionar na variável domain_admin_password:
 
 Verificar se a senha ficou correta:  
 `ansible localhost -m ansible.builtin.debug -a var="domain_admin_password" -e "@setic25/roles/ingressa_dominio/vars/main.yml" --ask-vault-pass`
-
 
 Falar como usamos: nossos computadores como Control node, repositórios abertos e fechados.
 
